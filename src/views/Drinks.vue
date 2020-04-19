@@ -3,7 +3,6 @@
     <h1>Страница со списком напитков и рейтингами</h1>
 
     <table class='drinks-list'>
-
       <thead>
         <tr>
           <th>Название</th>
@@ -36,25 +35,27 @@
 
 
 <script>
+import axios from 'axios';
+
+const BASE_API_URL = 'http://localhost:8080/api/v1';
+
 export default {
   name: 'ListDrinks',
+  components: {},
+  methods: {
+    getDrinks() {
+      axios.get(`${BASE_API_URL}/drinks/`).then((response) => {
+        this.drinks = response.data;
+      });
+    },
+  },
   data() {
     return {
-      drinks: [
-        {
-          id: 1,
-          name: 'вода',
-          description: 'лучший способ утолить жажду',
-          rating: 10,
-        },
-        {
-          id: 2,
-          name: 'компот',
-          description: 'сладковато',
-          rating: 4,
-        },
-      ],
+      drinks: [],
     };
+  },
+  mounted() {
+    this.getDrinks();
   },
 };
 </script>
